@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StockPro</title>
+<script>
+const KEY='sp3';
+let DB={users:[{id:1,nom:'Admin',email:'admin@demo.com',pwd:'admin123',role:'admin',created:new Date().toISOString()},{id:2,nom:'Vendeur',email:'vendeur@demo.com',pwd:'vendeur123',role:'vendeur',created:new Date().toISOString()}],depots:[{id:1,nom:'Dépôt Principal',adresse:'Parakou',responsable:'Admin'},{id:2,nom:'Boutique',adresse:'Centre-ville',responsable:''}],produits:[],mouvements:[],factures:[]};
+let currentUser=null,activeDepotId=null,editProdId=null,editDepotId=null,editUserId=null,editFactId=null,mvtType='entree',factLines=[];
+function loadDB(){try{const s=localStorage.getItem(KEY);if(s){const p=JSON.parse(s);DB={...DB,...p};if(!DB.users.find(u=>u.email==='admin@demo.com'))DB.users.unshift({id:1,nom:'Admin',email:'admin@demo.com',pwd:'admin123',role:'admin',created:new Date().toISOString()});}}catch(e){}}
+function saveDB(){localStorage.setItem(KEY,JSON.stringify(DB));}
+loadDB();
+function doLogin(){
+  const e=document.getElementById('le').value.trim().toLowerCase();
+  const p=document.getElementById('lp').value;
+  const u=DB.users.find(x=>x.email===e&&x.pwd===p);
+  if(!u){document.getElementById('lmsg').textContent='Email ou mot de passe incorrect.';return;}
+  currentUser=u;
+  document.getElementById('auth').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('uname').textContent=u.nom;
+  document.getElementById('urole').textContent={admin:'Administrateur',vendeur:'Vendeur',viewer​​​​​​​​​​​​​​​​
